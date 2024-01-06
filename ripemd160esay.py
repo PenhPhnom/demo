@@ -165,8 +165,6 @@ def main():
     message = message.encode()
     message = bytearray(message)
     hashed = RIPEMD160(message)
-    print(hex(hashed))
-
-
+    print(hex(hashed)[2:])
 if __name__ == "__main__":
     main()

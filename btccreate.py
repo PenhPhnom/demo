@@ -161,6 +161,7 @@ def RIPEMD160(byte):
         word = int.from_bytes(word, byteorder="big")
         hashed |= word
     return hashed
+
 # 指定私钥字符串
 private_key_str = input("需要加密的私钥：")
 
@@ -183,8 +184,10 @@ print("非压缩公钥:", public_key_uncompressed)
 
 # 计算hash160公钥
 public_key_sha256 = hashlib.sha256(bytes.fromhex(public_key_uncompressed)).digest()
-public_key_hash160 = hashlib.new('ripemd160', public_key_sha256).digest()
-# public_key_hash160 = RIPEMD160(public_key_sha256)
+# public_key_hash160 = hashlib.new('ripemd160', public_key_sha256).digest()
+
+public_key_hash160_int = RIPEMD160(bytearray(public_key_sha256))
+public_key_hash160 = public_key_hash160_int.to_bytes((RIPEMD160(bytearray(public_key_sha256)).bit_length() + 7) // 8, 'big')
 print("Hash160公钥:", public_key_hash160.hex())
 
 # 计算地址（与前面的代码保持一致）
@@ -193,8 +196,11 @@ print("Hash160公钥:", public_key_hash160.hex())
 # 1. 对公钥进行SHA-256哈希
 public_key_hash = hashlib.sha256(bytes.fromhex(public_key_uncompressed)).digest()
 # 2. 对哈希结果进行RIPEMD-160哈希
-ripemd160_hash = hashlib.new('ripemd160', public_key_hash).digest()
-# ripemd160_hash = RIPEMD160(public_key_hash).digest()
+# ripemd160_hash = hashlib.new('ripemd160', public_key_hash).digest()
+
+ripemd160_hash_int = RIPEMD160(bytearray(public_key_hash))
+ripemd160_hash = ripemd160_hash_int.to_bytes((RIPEMD160(bytearray(public_key_hash)).bit_length() + 7) // 8, 'big')
+
 # 3. 添加版本字节到哈希结果前面
 version_byte = b'\x00'  # 主网地址的版本字节为0x00
 hashed_string = version_byte + ripemd160_hash
