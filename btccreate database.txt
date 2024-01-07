@@ -1,0 +1,26 @@
+需要加密的私钥：0000000000000000000000000000000000000000000000000000000000000001
+私钥: 0000000000000000000000000000000000000000000000000000000000000001
+标准公钥: 0479be667ef9dcbbac55a06295ce870b07029bfcdb2dce28d959f2815b16f81798483ada7726a3c4655da4fbfc0e1108a8fd17b448a68554199c47d08ffb10d4b8
+sha256公钥: 50929b74c1a04954b78b4b6035e97a5e078a5a0f28ec96d547bfee9ace803ac0
+Hash160公钥: 91b24bf9f5288532960ac687abb035127b1d28a5
+
+
+version_byte 00 主网版本号
+ripemd160_hash 91b24bf9f5288532960ac687abb035127b1d28a5 ripemd160哈希值
+
+
+hashed_string = version_byte + ripemd160_hash
+hashed_string 0091b24bf9f5288532960ac687abb035127b1d28a5 版本号+哈希160的值
+
+
+hashed_twice = hashlib.sha256(hashlib.sha256(hashed_string).digest()).digest()
+hashed_twice 0074ffe0526d823be09b39865422a1d6135afc85afb0a6863c58e9fe89989170 两次hash256
+checksum 0074ffe0 校验值
+
+
+binary_address = hashed_string + checksum
+binary_address 0091b24bf9f5288532960ac687abb035127b1d28a50074ffe0 校验和添加到版本字节和哈希结果后面
+
+
+address = base58.b58encode(binary_address)
+地址: 1EHNa6Q4Jz2uvNExL497mE43ikXhwF6kZm

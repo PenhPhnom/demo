@@ -338,7 +338,7 @@ public_key_sha256 = sha256_hash(bytes.fromhex(public_key_uncompressed))
 print("sha256公钥:", public_key_sha256.hex())
 # public_key_hash160 = hashlib.new('ripemd160', public_key_sha256).digest()
 public_key_hash160_int = RIPEMD160(bytearray(public_key_sha256))
-public_key_hash160 = public_key_hash160_int.to_bytes((RIPEMD160(bytearray(public_key_sha256)).bit_length() + 7) // 8, 'big')
+public_key_hash160 = public_key_hash160_int.to_bytes((public_key_hash160_int.bit_length() + 7) // 8, 'big')
 print("Hash160公钥:", public_key_hash160.hex())
 
 # 计算地址（与前面的代码保持一致）
