@@ -1,0 +1,117 @@
+ python ripemd160esay.py
+需要加密的字符：123456
+byte_message= bytearray(b'123456')
+len_message = len(byte_message) * 8 48
+byte_message.append(0x80) bytearray(b'123456\x80')
+while (len(byte_message) * 8) % 512 != 448 byte_message.append(0x00) bytearray(b'123456\x80\x00')
+while (len(byte_message) * 8) % 512 != 448 byte_message.append(0x00) bytearray(b'123456\x80\x00\x00')
+while (len(byte_message) * 8) % 512 != 448 byte_message.append(0x00) bytearray(b'123456\x80\x00\x00\x00')
+while (len(byte_message) * 8) % 512 != 448 byte_message.append(0x00) bytearray(b'123456\x80\x00\x00\x00\x00')
+while (len(byte_message) * 8) % 512 != 448 byte_message.append(0x00) bytearray(b'123456\x80\x00\x00\x00\x00\x00')
+while (len(byte_message) * 8) % 512 != 448 byte_message.append(0x00) bytearray(b'123456\x80\x00\x00\x00\x00\x00\x00')
+while (len(byte_message) * 8) % 512 != 448 byte_message.append(0x00) bytearray(b'123456\x80\x00\x00\x00\x00\x00\x00\x00')
+while (len(byte_message) * 8) % 512 != 448 byte_message.append(0x00) bytearray(b'123456\x80\x00\x00\x00\x00\x00\x00\x00\x00')
+while (len(byte_message) * 8) % 512 != 448 byte_message.append(0x00) bytearray(b'123456\x80\x00\x00\x00\x00\x00\x00\x00\x00\x00')
+while (len(byte_message) * 8) % 512 != 448 byte_message.append(0x00) bytearray(b'123456\x80\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
+while (len(byte_message) * 8) % 512 != 448 byte_message.append(0x00) bytearray(b'123456\x80\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
+while (len(byte_message) * 8) % 512 != 448 byte_message.append(0x00) bytearray(b'123456\x80\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
+while (len(byte_message) * 8) % 512 != 448 byte_message.append(0x00) bytearray(b'123456\x80\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
+while (len(byte_message) * 8) % 512 != 448 byte_message.append(0x00) bytearray(b'123456\x80\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
+while (len(byte_message) * 8) % 512 != 448 byte_message.append(0x00) bytearray(b'123456\x80\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
+while (len(byte_message) * 8) % 512 != 448 byte_message.append(0x00) bytearray(b'123456\x80\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
+while (len(byte_message) * 8) % 512 != 448 byte_message.append(0x00) bytearray(b'123456\x80\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
+while (len(byte_message) * 8) % 512 != 448 byte_message.append(0x00) bytearray(b'123456\x80\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
+while (len(byte_message) * 8) % 512 != 448 byte_message.append(0x00) bytearray(b'123456\x80\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
+while (len(byte_message) * 8) % 512 != 448 byte_message.append(0x00) bytearray(b'123456\x80\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
+while (len(byte_message) * 8) % 512 != 448 byte_message.append(0x00) bytearray(b'123456\x80\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
+while (len(byte_message) * 8) % 512 != 448 byte_message.append(0x00) bytearray(b'123456\x80\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
+while (len(byte_message) * 8) % 512 != 448 byte_message.append(0x00) bytearray(b'123456\x80\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
+while (len(byte_message) * 8) % 512 != 448 byte_message.append(0x00) bytearray(b'123456\x80\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
+while (len(byte_message) * 8) % 512 != 448 byte_message.append(0x00) bytearray(b'123456\x80\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
+while (len(byte_message) * 8) % 512 != 448 byte_message.append(0x00) bytearray(b'123456\x80\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
+while (len(byte_message) * 8) % 512 != 448 byte_message.append(0x00) bytearray(b'123456\x80\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
+while (len(byte_message) * 8) % 512 != 448 byte_message.append(0x00) bytearray(b'123456\x80\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
+while (len(byte_message) * 8) % 512 != 448 byte_message.append(0x00) bytearray(b'123456\x80\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
+while (len(byte_message) * 8) % 512 != 448 byte_message.append(0x00) bytearray(b'123456\x80\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
+while (len(byte_message) * 8) % 512 != 448 byte_message.append(0x00) bytearray(b'123456\x80\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
+while (len(byte_message) * 8) % 512 != 448 byte_message.append(0x00) bytearray(b'123456\x80\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
+while (len(byte_message) * 8) % 512 != 448 byte_message.append(0x00) bytearray(b'123456\x80\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
+while (len(byte_message) * 8) % 512 != 448 byte_message.append(0x00) bytearray(b'123456\x80\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
+while (len(byte_message) * 8) % 512 != 448 byte_message.append(0x00) bytearray(b'123456\x80\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
+while (len(byte_message) * 8) % 512 != 448 byte_message.append(0x00) bytearray(b'123456\x80\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
+while (len(byte_message) * 8) % 512 != 448 byte_message.append(0x00) bytearray(b'123456\x80\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
+while (len(byte_message) * 8) % 512 != 448 byte_message.append(0x00) bytearray(b'123456\x80\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
+while (len(byte_message) * 8) % 512 != 448 byte_message.append(0x00) bytearray(b'123456\x80\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
+while (len(byte_message) * 8) % 512 != 448 byte_message.append(0x00) bytearray(b'123456\x80\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
+while (len(byte_message) * 8) % 512 != 448 byte_message.append(0x00) bytearray(b'123456\x80\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
+while (len(byte_message) * 8) % 512 != 448 byte_message.append(0x00) bytearray(b'123456\x80\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
+while (len(byte_message) * 8) % 512 != 448 byte_message.append(0x00) bytearray(b'123456\x80\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
+while (len(byte_message) * 8) % 512 != 448 byte_message.append(0x00) bytearray(b'123456\x80\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
+while (len(byte_message) * 8) % 512 != 448 byte_message.append(0x00) bytearray(b'123456\x80\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
+while (len(byte_message) * 8) % 512 != 448 byte_message.append(0x00) bytearray(b'123456\x80\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
+while (len(byte_message) * 8) % 512 != 448 byte_message.append(0x00) bytearray(b'123456\x80\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
+while (len(byte_message) * 8) % 512 != 448 byte_message.append(0x00) bytearray(b'123456\x80\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
+while (len(byte_message) * 8) % 512 != 448 byte_message.append(0x00) bytearray(b'123456\x80\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00')
+first_part = len_message & 0xFFFFFFFF 48
+first_part = first_part.to_bytes(4, byteorder = little) b'0\x00\x00\x00'
+second_part = len_message >> 32 0
+second_part = second_part.to_bytes(4, byteorder=little) b'\x00\x00\x00\x00'
+byte_message += first_part b'\x00\x00\x00\x00'
+byte_message += second_part b'\x00\x00\x00\x00'
+length = len(byte_message) * 8 512
+part = byte_message[64 * i:64*(i + 1)] bytearray(b'123456\x80\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x000\x00\x00\x00\x00\x00\x00\x00')
+separated_message.append([]) [[]]
+word = part[4 * j:4*(j + 1)] bytearray(b'1234')
+separated_message[i].append(int.from_bytes(word, byteorder=little, signed=False)) [875770417]
+word = part[4 * j:4*(j + 1)] bytearray(b'56\x80\x00')
+separated_message[i].append(int.from_bytes(word, byteorder=little, signed=False)) [875770417, 8402485]
+word = part[4 * j:4*(j + 1)] bytearray(b'\x00\x00\x00\x00')
+separated_message[i].append(int.from_bytes(word, byteorder=little, signed=False)) [875770417, 8402485, 0]
+word = part[4 * j:4*(j + 1)] bytearray(b'\x00\x00\x00\x00')
+separated_message[i].append(int.from_bytes(word, byteorder=little, signed=False)) [875770417, 8402485, 0, 0]
+word = part[4 * j:4*(j + 1)] bytearray(b'\x00\x00\x00\x00')
+separated_message[i].append(int.from_bytes(word, byteorder=little, signed=False)) [875770417, 8402485, 0, 0, 0]
+word = part[4 * j:4*(j + 1)] bytearray(b'\x00\x00\x00\x00')
+separated_message[i].append(int.from_bytes(word, byteorder=little, signed=False)) [875770417, 8402485, 0, 0, 0, 0]
+word = part[4 * j:4*(j + 1)] bytearray(b'\x00\x00\x00\x00')
+separated_message[i].append(int.from_bytes(word, byteorder=little, signed=False)) [875770417, 8402485, 0, 0, 0, 0, 0]
+word = part[4 * j:4*(j + 1)] bytearray(b'\x00\x00\x00\x00')
+separated_message[i].append(int.from_bytes(word, byteorder=little, signed=False)) [875770417, 8402485, 0, 0, 0, 0, 0, 0]
+word = part[4 * j:4*(j + 1)] bytearray(b'\x00\x00\x00\x00')
+separated_message[i].append(int.from_bytes(word, byteorder=little, signed=False)) [875770417, 8402485, 0, 0, 0, 0, 0, 0, 0]
+word = part[4 * j:4*(j + 1)] bytearray(b'\x00\x00\x00\x00')
+separated_message[i].append(int.from_bytes(word, byteorder=little, signed=False)) [875770417, 8402485, 0, 0, 0, 0, 0, 0, 0, 0]
+word = part[4 * j:4*(j + 1)] bytearray(b'\x00\x00\x00\x00')
+separated_message[i].append(int.from_bytes(word, byteorder=little, signed=False)) [875770417, 8402485, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+word = part[4 * j:4*(j + 1)] bytearray(b'\x00\x00\x00\x00')
+separated_message[i].append(int.from_bytes(word, byteorder=little, signed=False)) [875770417, 8402485, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+word = part[4 * j:4*(j + 1)] bytearray(b'\x00\x00\x00\x00')
+separated_message[i].append(int.from_bytes(word, byteorder=little, signed=False)) [875770417, 8402485, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+word = part[4 * j:4*(j + 1)] bytearray(b'\x00\x00\x00\x00')
+separated_message[i].append(int.from_bytes(word, byteorder=little, signed=False)) [875770417, 8402485, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+word = part[4 * j:4*(j + 1)] bytearray(b'0\x00\x00\x00')
+separated_message[i].append(int.from_bytes(word, byteorder=little, signed=False)) [875770417, 8402485, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 48]
+word = part[4 * j:4*(j + 1)] bytearray(b'\x00\x00\x00\x00')
+separated_message[i].append(int.from_bytes(word, byteorder=little, signed=False)) [875770417, 8402485, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 48, 0]
+for j in range(16): [[875770417, 8402485, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 48, 0]]
+part = separated_message[i] [[875770417, 8402485, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 48, 0]]
+word = h[0].to_bytes(4, byteorder = little) 3633397235
+word = int.from_bytes(word, byteorder = big) 3633397235
+hashed |= word 3633397235
+hashed |= word <<= 32 15605322297701826560
+word = h[1].to_bytes(4, byteorder = little) 2066008447
+word = int.from_bytes(word, byteorder = big) 2066008447
+hashed |= word 15605322299767835007
+hashed |= word <<= 32 67024348921042359747788931072
+word = h[2].to_bytes(4, byteorder = little) 687357969
+word = int.from_bytes(word, byteorder = big) 687357969
+hashed |= word 67024348921042359748476289041
+hashed |= word <<= 32 287867386651569821350372447262538203136
+word = h[3].to_bytes(4, byteorder = little) 1292221713
+word = int.from_bytes(word, byteorder = big) 1292221713
+hashed |= word 287867386651569821350372447263830424849
+hashed |= word <<= 32 1236381011253479329760412218417636358416240738304
+word = h[4].to_bytes(4, byteorder = little) 230370884
+word = int.from_bytes(word, byteorder = big) 230370884
+hashed |= word 1236381011253479329760412218417636358416471109188
+d8913df37b24c97f28f840114d05bd110dbb2e44

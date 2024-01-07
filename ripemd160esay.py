@@ -36,18 +36,31 @@ def function_choose(j):
 def RIPEMD160(byte):
     # 添加
     byte_message = byte
+    print("byte_message=",byte_message)
     len_message = len(byte_message) * 8
+    print("len_message = len(byte_message) * 8",len_message)
     byte_message.append(0x80)
+    print("byte_message.append(0x80)",byte_message)
+    count = 0
     while (len(byte_message) * 8) % 512 != 448:
         byte_message.append(0x00)
+        count += 1
+        print("while (len(byte_message) * 8) % 512 != 448 byte_message.append(0x00)",byte_message)
     if len_message >= 2**64:
         len_message &= 0xFFFFFFFFFFFFFFFF
+        print("len_message >= 2**64 => true",len_message)
     first_part = len_message & 0xFFFFFFFF
+    print("first_part = len_message & 0xFFFFFFFF",first_part)
     first_part = first_part.to_bytes(4, byteorder="little")
+    print("first_part = first_part.to_bytes(4, byteorder = little)",first_part)
     second_part = len_message >> 32
+    print("second_part = len_message >> 32",second_part)
     second_part = second_part.to_bytes(4, byteorder="little")
+    print("second_part = second_part.to_bytes(4, byteorder=little)",second_part)
     byte_message += first_part
+    print("byte_message += first_part",second_part)
     byte_message += second_part
+    print("byte_message += second_part",second_part)
     # 初始化
     
     constant_adding = [0x00000000, 0x5A827999, 0x6ED9EBA1, 0x8F1BBCDC, 0xA953FD4E]
@@ -75,16 +88,23 @@ def RIPEMD160(byte):
     h = [0x67452301, 0xEFCDAB89, 0x98BADCFE, 0x10325476, 0xC3D2E1F0]
     # 将消息拆分为单词
     length = len(byte_message) * 8
+    print("length = len(byte_message) * 8",length)
     separated_message = []
     for i in range((length//512)):
         part = byte_message[64 * i:64*(i + 1)]
+        print("part = byte_message[64 * i:64*(i + 1)]",part)
         separated_message.append([])
+        print("separated_message.append([])",separated_message)
         for j in range(16):
             word = part[4 * j:4*(j + 1)]
+            print("word = part[4 * j:4*(j + 1)]",word)
             separated_message[i].append(int.from_bytes(word, byteorder="little", signed=False))
+            print("separated_message[i].append(int.from_bytes(word, byteorder=little, signed=False))",separated_message[i])
+        print("for j in range(16):",separated_message)
     # 算法
     for i in range(len(separated_message)):
         part = separated_message[i]
+        print("part = separated_message[i]",separated_message)
         A = h[0]
         B = h[1]
         C = h[2]
@@ -138,25 +158,48 @@ def RIPEMD160(byte):
         h[4] = (h[0] + B + C_hatch) % (2 ** 32)
         h[0] = T
     else:
+        print("===========================now debug===============================")
         word = h[0].to_bytes(4, byteorder="little")
+        # print("word = h[0].to_bytes(4, byteorder = little)",bin(int(word.hex(),16))[2:])
         word = int.from_bytes(word, byteorder="big")
+        # print("word = int.from_bytes(word, byteorder = big)",bin(word)[2:])
         hashed = word
+        print("hashed = word:","hashed",hashed,bin(hashed)[2:],"word",word,bin(word)[2:])
         hashed <<= 32
+        # print("hashed |= word <<= 32",hashed)
         word = h[1].to_bytes(4, byteorder="little")
+        # print("word = h[1].to_bytes(4, byteorder = little)",bin(int(word.hex(),16))[2:])
         word = int.from_bytes(word, byteorder="big")
+        # print("word = int.from_bytes(word, byteorder = big)",bin(word)[2:])
         hashed |= word
+        print("hashed |= word:","hashed",hashed,bin(hashed)[2:],"word",word,bin(word)[2:])
         hashed <<= 32
+        # print("hashed |= word <<= 32",hashed)
         word = h[2].to_bytes(4, byteorder="little")
+        # print("word = h[2].to_bytes(4, byteorder = little)",bin(int(word.hex(),16))[2:])
         word = int.from_bytes(word, byteorder="big")
+        # print("word = int.from_bytes(word, byteorder = big)",bin(word)[2:])
         hashed |= word
+        print("hashed |= word:","hashed",hashed,bin(hashed)[2:],"word",word,bin(word)[2:])
         hashed <<= 32
+        # print("hashed |= word <<= 32",hashed)
         word = h[3].to_bytes(4, byteorder="little")
+        # print("word = h[3].to_bytes(4, byteorder = little)",bin(int(word.hex(),16))[2:])
         word = int.from_bytes(word, byteorder="big")
+        # print("word = int.from_bytes(word, byteorder = big)",bin(word)[2:])
         hashed |= word
+        print("hashed |= word:","hashed",hashed,bin(hashed)[2:],"word",word,bin(word)[2:])
         hashed <<= 32
+        # print("hashed |= word <<= 32",hashed)
         word = h[4].to_bytes(4, byteorder="little")
+        # print("word = h[4].to_bytes(4, byteorder = little)",bin(int(word.hex(),16))[2:])
         word = int.from_bytes(word, byteorder="big")
+        # print("word = int.from_bytes(word, byteorder = big)",bin(word)[2:])
+        # print("4 re",word.to_bytes(word.bit_length() + 7, byteorder="big").hex())
+        # print("4 re",int.from_bytes(word.to_bytes(word.bit_length() + 7, byteorder="big"), byteorder = "little"))
         hashed |= word
+        print("hashed |= word:","hashed",hex(hashed)[2:],hashed,bin(hashed)[2:],"word",word,bin(word)[2:])
+        print("===========================now debug===============================")
     return hashed
 
 
