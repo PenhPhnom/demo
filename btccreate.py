@@ -335,9 +335,10 @@ print("标准公钥:", public_key_uncompressed)
 # 计算hash160公钥
 # public_key_sha256 = hashlib.sha256(bytes.fromhex(public_key_uncompressed)).digest()
 public_key_sha256 = sha256_hash(bytes.fromhex(public_key_uncompressed))
-print("sha256公钥:", public_key_sha256.hex())
+print("sha256公钥:", public_key_sha256.hex(),public_key_sha256)
 # public_key_hash160 = hashlib.new('ripemd160', public_key_sha256).digest()
 public_key_hash160_int = RIPEMD160(bytearray(public_key_sha256))
+print("Hash160公钥int:", bytearray(public_key_sha256).hex())
 public_key_hash160 = public_key_hash160_int.to_bytes((public_key_hash160_int.bit_length() + 7) // 8, 'big')
 print("Hash160公钥:", public_key_hash160.hex())
 
@@ -350,7 +351,7 @@ public_key_hash = sha256_hash(bytes.fromhex(public_key_uncompressed))
 # 2. 对哈希结果进行RIPEMD-160哈希
 # ripemd160_hash = hashlib.new('ripemd160', public_key_hash).digest()
 ripemd160_hash_int = RIPEMD160(bytearray(public_key_hash))
-ripemd160_hash = ripemd160_hash_int.to_bytes((RIPEMD160(bytearray(public_key_hash)).bit_length() + 7) // 8, 'big')
+ripemd160_hash = ripemd160_hash_int.to_bytes((ripemd160_hash_int.bit_length() + 7) // 8, 'big')
 
 # 3. 添加版本字节到哈希结果前面
 version_byte = b'\x00'  # 主网地址的版本字节为0x00
