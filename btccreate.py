@@ -51,7 +51,6 @@ def sha256_hash(message: bytearray) -> bytearray:
     h4 = 0x510e527f
     h6 = 0x1f83d9ab
     h7 = 0x5be0cd19
-
     # SHA-256 Hash Computation
     for message_block in blocks:
         # Prepare message schedule
@@ -73,7 +72,9 @@ def sha256_hash(message: bytearray) -> bytearray:
                 message_schedule.append(schedule)
 
         assert len(message_schedule) == 64
-
+        # print("message_schedule=",message_schedule)
+        # for mes in message_schedule:
+        #     print(mes.hex(),"\n")
         # Initialize working variables
         a = h0
         b = h1
@@ -168,6 +169,7 @@ def cycle_shift(v, pos):
     number = 0
     for i in range(32):
         number += bin_str[i] * (2 ** (31 - i))
+    
     return number
 
 
@@ -238,6 +240,8 @@ def RIPEMD160(byte):
         for j in range(16):
             word = part[4 * j:4*(j + 1)]
             separated_message[i].append(int.from_bytes(word, byteorder="little", signed=False))
+    # print(separated_message)
+    # separated_message = [[4294967296, 4294967296, 4294967296, 4294967296, 4294967296, 4294967296, 4294967296, 4294967296, 128, 0, 0, 0, 0, 0, 256, 0]]
     # 算法
     for i in range(len(separated_message)):
         part = separated_message[i]
@@ -251,6 +255,7 @@ def RIPEMD160(byte):
         C_hatch = h[2]
         D_hatch = h[3]
         E_hatch = h[4]
+        print(h)
         for j in range(80):
             f = function_choose(j)
             f_hatch = function_choose(79 - j)
@@ -271,6 +276,7 @@ def RIPEMD160(byte):
                 k_hatch = constant_adding_hatch[4]
             x = part[r[j]]
             x_hatch = part[r_hatch[j]]
+
             T = (A + f(B, C, D) + x + k) % (2**32)
             T = cycle_shift(T, s[j])
             T = (T + E) % (2**32)
@@ -293,7 +299,9 @@ def RIPEMD160(byte):
         h[3] = (h[4] + A + B_hatch) % (2 ** 32)
         h[4] = (h[0] + B + C_hatch) % (2 ** 32)
         h[0] = T
+        print("h=",h)
     else:
+        print("h=s=",h)
         word = h[0].to_bytes(4, byteorder="little")
         word = int.from_bytes(word, byteorder="big")
         hashed = word
@@ -313,6 +321,7 @@ def RIPEMD160(byte):
         word = h[4].to_bytes(4, byteorder="little")
         word = int.from_bytes(word, byteorder="big")
         hashed |= word
+    print(hashed)
     return hashed
 
 # 指定私钥字符串
@@ -324,27 +333,13 @@ private_key_bytes = bytes.fromhex(private_key_str)
 # 构建私钥对象
 private_key = ecdsa.SigningKey.from_string(private_key_bytes, curve=ecdsa.SECP256k1)
 private_key_hex = private_key.to_string().hex()
-print("私钥:", private_key_hex)
 
 # 计算标准公钥
 public_key = private_key.get_verifying_key()
 public_key_compressed = public_key.to_string().hex()
 public_key_uncompressed = "04" + public_key.to_string().hex()
-print("标准公钥:", public_key_uncompressed)
 
 # 计算hash160公钥
-# public_key_sha256 = hashlib.sha256(bytes.fromhex(public_key_uncompressed)).digest()
-public_key_sha256 = sha256_hash(bytes.fromhex(public_key_uncompressed))
-print("sha256公钥:", public_key_sha256.hex(),public_key_sha256)
-# public_key_hash160 = hashlib.new('ripemd160', public_key_sha256).digest()
-public_key_hash160_int = RIPEMD160(bytearray(public_key_sha256))
-print("Hash160公钥int:", bytearray(public_key_sha256).hex())
-public_key_hash160 = public_key_hash160_int.to_bytes((public_key_hash160_int.bit_length() + 7) // 8, 'big')
-print("Hash160公钥:", public_key_hash160.hex())
-
-# 计算地址（与前面的代码保持一致）
-
-# 计算地址
 # 1. 对公钥进行SHA-256哈希
 # public_key_hash = hashlib.sha256(bytes.fromhex(public_key_uncompressed)).digest()
 public_key_hash = sha256_hash(bytes.fromhex(public_key_uncompressed))
@@ -352,7 +347,7 @@ public_key_hash = sha256_hash(bytes.fromhex(public_key_uncompressed))
 # ripemd160_hash = hashlib.new('ripemd160', public_key_hash).digest()
 ripemd160_hash_int = RIPEMD160(bytearray(public_key_hash))
 ripemd160_hash = ripemd160_hash_int.to_bytes((ripemd160_hash_int.bit_length() + 7) // 8, 'big')
-
+print("ripemd160_hash,ripemd160_hash_int=",ripemd160_hash.hex(),ripemd160_hash_int)
 # 3. 添加版本字节到哈希结果前面
 version_byte = b'\x00'  # 主网地址的版本字节为0x00
 hashed_string = version_byte + ripemd160_hash

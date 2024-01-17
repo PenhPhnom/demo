@@ -1,4 +1,6 @@
 from operator import irshift
+
+
 def cycle_shift(v, pos):
     bin_str = []
     for i in range(32):
@@ -32,13 +34,17 @@ def function_choose(j):
         return functions[3]
     if 64 <= j:
         return functions[4]
+
+
 def RIPEMD160(byte):
-   # 添加
+    # 添加
     byte_message = byte
     len_message = len(byte_message) * 8
     byte_message.append(0x80)
+    count = 0
     while (len(byte_message) * 8) % 512 != 448:
         byte_message.append(0x00)
+        count += 1
     if len_message >= 2**64:
         len_message &= 0xFFFFFFFFFFFFFFFF
     first_part = len_message & 0xFFFFFFFF
@@ -81,8 +87,9 @@ def RIPEMD160(byte):
         for j in range(16):
             word = part[4 * j:4*(j + 1)]
             separated_message[i].append(int.from_bytes(word, byteorder="little", signed=False))
-    print("separated_message=",separated_message)
+    print("part=",part)
     # 算法
+    print("separated_message=",separated_message,len(separated_message))
     for i in range(len(separated_message)):
         part = separated_message[i]
         A = h[0]
@@ -116,37 +123,27 @@ def RIPEMD160(byte):
             x = part[r[j]]
             x_hatch = part[r_hatch[j]]
             T = (A + f(B, C, D) + x + k) % (2**32)
-            print("1",(A + f(B, C, D) + x + k),"余数=",(A + f(B, C, D) + x + k) % (2**32))
             T = cycle_shift(T, s[j])
             T = (T + E) % (2**32)
-            print("2",(T + E),"余数=",(T + E) % (2**32))
             A = E
             E = D
             D = cycle_shift(C, 10)
             C = B
             B = T
             T = (A_hatch + f_hatch(B_hatch, C_hatch, D_hatch) + x_hatch + k_hatch) % (2 ** 32)
-            print("3",(A_hatch + f_hatch(B_hatch, C_hatch, D_hatch) + x_hatch + k_hatch),"余数=",(A_hatch + f_hatch(B_hatch, C_hatch, D_hatch) + x_hatch + k_hatch) % (2**32))
             T = cycle_shift(T, s_hatch[j])
             T = (T + E_hatch) % (2 ** 32)
-            print("4",(T + E_hatch),"余数=",(T + E_hatch) % (2**32))
             A_hatch= E_hatch
             E_hatch = D_hatch
             D_hatch = cycle_shift(C_hatch, 10)
             C_hatch = B_hatch
             B_hatch = T
         T = (h[1] + C + D_hatch) % (2 ** 32)
-        # print("5",(h[1] + C + D_hatch),"余数=",(h[1] + C + D_hatch) % (2**32))
         h[1] = (h[2] + D + E_hatch) % (2 ** 32)
-        # print("6",(h[2] + D + E_hatch),"余数=",(h[2] + D + E_hatch) % (2**32))
         h[2] = (h[3] + E + A_hatch) % (2 ** 32)
-        # print("7",(h[3] + E + A_hatch),"余数=",(h[3] + E + A_hatch) % (2**32))
         h[3] = (h[4] + A + B_hatch) % (2 ** 32)
-        # print("8",(h[4] + A + B_hatch),"余数=",(h[4] + A + B_hatch) % (2**32))
         h[4] = (h[0] + B + C_hatch) % (2 ** 32)
-        # print("9",(h[0] + B + C_hatch),"余数=",(h[0] + B + C_hatch) % (2**32))
         h[0] = T
-        print(h)
     else:
         word = h[0].to_bytes(4, byteorder="little")
         word = int.from_bytes(word, byteorder="big")
@@ -167,13 +164,21 @@ def RIPEMD160(byte):
         word = h[4].to_bytes(4, byteorder="little")
         word = int.from_bytes(word, byteorder="big")
         hashed |= word
+        print("word",word,bin(word)[2:])
     return hashed
+def RIPEMD160DECODE(string):
 
+    return string
+    
+    
 
 def main():
-    message = input("需要加密的字符：")
-    message = bytearray(bytes.fromhex(message))
-    hashed = RIPEMD160(message)
-    print(hex(hashed)[2:],hashed)
+    # message = input("需要加密的字符：")
+    message = input("需要解密的字符：")
+    message = bytearray.fromhex(message)
+    # hashed = RIPEMD160(message)
+    # print(hex(hashed)[2:])
+    rehashed = RIPEMD160DECODE(message)
+    print(rehashed)
 if __name__ == "__main__":
     main()
