@@ -3,7 +3,7 @@ import ecdsa
 import base58
 """This Python module is an implementation of the SHA-256 algorithm.
 From https://github.com/keanemind/Python-SHA-256"""
-
+JM = []
 K = [
     0x428a2f98, 0x71374491, 0xb5c0fbcf, 0xe9b5dba5, 0x3956c25b, 0x59f111f1, 0x923f82a4, 0xab1c5ed5,
     0xd807aa98, 0x12835b01, 0x243185be, 0x550c7dc3, 0x72be5d74, 0x80deb1fe, 0x9bdc06a7, 0xc19bf174,
@@ -72,9 +72,6 @@ def sha256_hash(message: bytearray) -> bytearray:
                 message_schedule.append(schedule)
 
         assert len(message_schedule) == 64
-        # print("message_schedule=",message_schedule)
-        # for mes in message_schedule:
-        #     print(mes.hex(),"\n")
         # Initialize working variables
         a = h0
         b = h1
@@ -84,14 +81,11 @@ def sha256_hash(message: bytearray) -> bytearray:
         f = h5
         g = h6
         h = h7
-
         # Iterate for t=0 to 63
         for t in range(64):
             t1 = ((h + _capsigma1(e) + _ch(e, f, g) + K[t] +
                    int.from_bytes(message_schedule[t], 'big')) % 2**32)
-
             t2 = (_capsigma0(a) + _maj(a, b, c)) % 2**32
-
             h = g
             g = f
             f = e
@@ -100,6 +94,7 @@ def sha256_hash(message: bytearray) -> bytearray:
             c = b
             b = a
             a = (t1 + t2) % 2**32
+
 
         # Compute intermediate hash value
         h0 = (h0 + a) % 2**32
@@ -110,7 +105,10 @@ def sha256_hash(message: bytearray) -> bytearray:
         h5 = (h5 + f) % 2**32
         h6 = (h6 + g) % 2**32
         h7 = (h7 + h) % 2**32
-
+    print("hash256",((h0).to_bytes(4, 'big') + (h1).to_bytes(4, 'big') +
+        (h2).to_bytes(4, 'big') + (h3).to_bytes(4, 'big') +
+        (h4).to_bytes(4, 'big') + (h5).to_bytes(4, 'big') +
+        (h6).to_bytes(4, 'big') + (h7).to_bytes(4, 'big')).hex())
     return ((h0).to_bytes(4, 'big') + (h1).to_bytes(4, 'big') +
             (h2).to_bytes(4, 'big') + (h3).to_bytes(4, 'big') +
             (h4).to_bytes(4, 'big') + (h5).to_bytes(4, 'big') +
@@ -171,7 +169,6 @@ def cycle_shift(v, pos):
         number += bin_str[i] * (2 ** (31 - i))
     
     return number
-
 
 def function_choose(j):
     functions = [lambda x, y, z: (x ^ y ^ z),
@@ -240,8 +237,6 @@ def RIPEMD160(byte):
         for j in range(16):
             word = part[4 * j:4*(j + 1)]
             separated_message[i].append(int.from_bytes(word, byteorder="little", signed=False))
-    # print(separated_message)
-    # separated_message = [[4294967296, 4294967296, 4294967296, 4294967296, 4294967296, 4294967296, 4294967296, 4294967296, 128, 0, 0, 0, 0, 0, 256, 0]]
     # 算法
     for i in range(len(separated_message)):
         part = separated_message[i]
@@ -255,10 +250,10 @@ def RIPEMD160(byte):
         C_hatch = h[2]
         D_hatch = h[3]
         E_hatch = h[4]
-        print(h)
         for j in range(80):
             f = function_choose(j)
             f_hatch = function_choose(79 - j)
+
             if j < 16:
                 k = constant_adding[0]
                 k_hatch = constant_adding_hatch[0]
@@ -276,7 +271,6 @@ def RIPEMD160(byte):
                 k_hatch = constant_adding_hatch[4]
             x = part[r[j]]
             x_hatch = part[r_hatch[j]]
-
             T = (A + f(B, C, D) + x + k) % (2**32)
             T = cycle_shift(T, s[j])
             T = (T + E) % (2**32)
@@ -299,9 +293,7 @@ def RIPEMD160(byte):
         h[3] = (h[4] + A + B_hatch) % (2 ** 32)
         h[4] = (h[0] + B + C_hatch) % (2 ** 32)
         h[0] = T
-        print("h=",h)
     else:
-        print("h=s=",h)
         word = h[0].to_bytes(4, byteorder="little")
         word = int.from_bytes(word, byteorder="big")
         hashed = word
@@ -321,59 +313,68 @@ def RIPEMD160(byte):
         word = h[4].to_bytes(4, byteorder="little")
         word = int.from_bytes(word, byteorder="big")
         hashed |= word
-    print(hashed)
     return hashed
+
+
+
+def createBtcAddress(private_key_str:str):
+    # 将私钥字符串转换为字节类型
+    private_key_bytes = bytes.fromhex(private_key_str)
+
+    # 构建私钥对象
+    private_key = ecdsa.SigningKey.from_string(private_key_bytes, curve=ecdsa.SECP256k1)
+    private_key_hex = private_key.to_string().hex()
+
+    # 计算标准公钥
+    public_key = private_key.get_verifying_key()
+    public_key_compressed = public_key.to_string().hex()
+    print("public_key_compressed",public_key_compressed)
+    public_key_uncompressed = "04" + public_key.to_string().hex()
+
+    # 计算hash160公钥
+    # 1. 对公钥进行SHA-256哈希
+    # public_key_hash = hashlib.sha256(bytes.fromhex(public_key_uncompressed)).digest()
+    public_key_hash = sha256_hash(bytes.fromhex(public_key_uncompressed))
+    print("public_key_hash",int.from_bytes(public_key_hash, 'big'))
+    # 2. 对哈希结果进行RIPEMD-160哈希
+    # ripemd160_hash = hashlib.new('ripemd160', public_key_hash).digest()
+    ripemd160_hash_int = RIPEMD160(bytearray(public_key_hash))
+    ripemd160_hash = ripemd160_hash_int.to_bytes((ripemd160_hash_int.bit_length() + 7) // 8, 'big')
+    # print("ripemd160_hash,ripemd160_hash_int=",ripemd160_hash.hex(),ripemd160_hash_int)
+    # 3. 添加版本字节到哈希结果前面
+    version_byte = b'\x00'  # 主网地址的版本字节为0x00
+    hashed_string = version_byte + ripemd160_hash
+    a = public_key_hash.hex()
+    # 4. 对结果进行两次SHA-256哈希
+    # hashed_twice = hashlib.sha256(hashlib.sha256(hashed_string).digest()).digest()
+    hashed_twice = sha256_hash(sha256_hash(hashed_string))
+    # 5. 取前4个字节为校验和
+    checksum = hashed_twice[:4]
+    # 6. 将校验和添加到版本字节和哈希结果后面
+    binary_address = hashed_string + checksum
+    # 7. 对二进制地址进行Base58编码
+    address = base58.b58encode(binary_address)
+    # print("\n")
+    # print("version_byte",version_byte.hex(),"主网版本号")
+    print("ripemd160_hash",ripemd160_hash.hex(),"ripemd160哈希值")
+    print("\n")
+    print("hashed_string = version_byte + ripemd160_hash")
+    print("hashed_string",hashed_string.hex(),"版本号+哈希160的值")
+    print("\n")
+    print("hashed_twice = hashlib.sha256(hashlib.sha256(hashed_string).digest()).digest()")
+    print("hashed_twice",hashed_twice.hex(),"两次hash256")
+    print("checksum",checksum.hex(),"校验值")
+    print("\n")
+    print("binary_address = hashed_string + checksum")
+    print("binary_address",binary_address.hex(),"校验和添加到版本字节和哈希结果后面")
+    print("\n")
+    print("address = base58.b58encode(binary_address)")
+    print("地址:", address.decode())
+    return address.decode(),ripemd160_hash.hex()
+
+
 
 # 指定私钥字符串
 private_key_str = input("需要加密的私钥：")
+createBtcAddress(private_key_str)
 
-# 将私钥字符串转换为字节类型
-private_key_bytes = bytes.fromhex(private_key_str)
-
-# 构建私钥对象
-private_key = ecdsa.SigningKey.from_string(private_key_bytes, curve=ecdsa.SECP256k1)
-private_key_hex = private_key.to_string().hex()
-
-# 计算标准公钥
-public_key = private_key.get_verifying_key()
-public_key_compressed = public_key.to_string().hex()
-public_key_uncompressed = "04" + public_key.to_string().hex()
-
-# 计算hash160公钥
-# 1. 对公钥进行SHA-256哈希
-# public_key_hash = hashlib.sha256(bytes.fromhex(public_key_uncompressed)).digest()
-public_key_hash = sha256_hash(bytes.fromhex(public_key_uncompressed))
-# 2. 对哈希结果进行RIPEMD-160哈希
-# ripemd160_hash = hashlib.new('ripemd160', public_key_hash).digest()
-ripemd160_hash_int = RIPEMD160(bytearray(public_key_hash))
-ripemd160_hash = ripemd160_hash_int.to_bytes((ripemd160_hash_int.bit_length() + 7) // 8, 'big')
-print("ripemd160_hash,ripemd160_hash_int=",ripemd160_hash.hex(),ripemd160_hash_int)
-# 3. 添加版本字节到哈希结果前面
-version_byte = b'\x00'  # 主网地址的版本字节为0x00
-hashed_string = version_byte + ripemd160_hash
-a = public_key_hash.hex()
-# 4. 对结果进行两次SHA-256哈希
-# hashed_twice = hashlib.sha256(hashlib.sha256(hashed_string).digest()).digest()
-hashed_twice = sha256_hash(sha256_hash(hashed_string))
-# 5. 取前4个字节为校验和
-checksum = hashed_twice[:4]
-# 6. 将校验和添加到版本字节和哈希结果后面
-binary_address = hashed_string + checksum
-# 7. 对二进制地址进行Base58编码
-address = base58.b58encode(binary_address)
-print("\n")
-print("version_byte",version_byte.hex(),"主网版本号")
-print("ripemd160_hash",ripemd160_hash.hex(),"ripemd160哈希值")
-print("\n")
-print("hashed_string = version_byte + ripemd160_hash")
-print("hashed_string",hashed_string.hex(),"版本号+哈希160的值")
-print("\n")
-print("hashed_twice = hashlib.sha256(hashlib.sha256(hashed_string).digest()).digest()")
-print("hashed_twice",hashed_twice.hex(),"两次hash256")
-print("checksum",checksum.hex(),"校验值")
-print("\n")
-print("binary_address = hashed_string + checksum")
-print("binary_address",binary_address.hex(),"校验和添加到版本字节和哈希结果后面")
-print("\n")
-print("address = base58.b58encode(binary_address)")
-print("地址:", address.decode())
